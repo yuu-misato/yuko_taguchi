@@ -1293,6 +1293,191 @@
             color: rgba(255,255,255,0.9);
         }
 
+        /* 拡張プロフィール - キャリアタイムライン */
+        .profile-extended {
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-section-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-section-title::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .career-category {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .career-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .career-category:nth-child(2) { transition-delay: 0.15s; }
+        .career-category:nth-child(3) { transition-delay: 0.3s; }
+
+        .career-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .career-category-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .career-count {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .career-list {
+            list-style: none;
+        }
+
+        .career-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            padding-bottom: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .career-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background: var(--red-primary);
+            border-radius: 50%;
+        }
+
+        /* プロフィールの特技・資格セクション */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.08);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .skill-card:nth-child(2) { transition-delay: 0.1s; }
+        .skill-card:nth-child(3) { transition-delay: 0.2s; }
+        .skill-card:nth-child(4) { transition-delay: 0.3s; }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .skill-name {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+        }
+
+        .skill-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-5px);
+        }
+
+        /* 人柄セクション */
+        .personality-section {
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .personality-card {
+            background: linear-gradient(135deg, rgba(217, 55, 68, 0.1), rgba(217, 55, 68, 0.05));
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(217, 55, 68, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .personality-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .personality-card:nth-child(2) { transition-delay: 0.15s; }
+
+        .personality-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .personality-text {
+            color: rgba(255,255,255,0.85);
+            line-height: 1.9;
+            font-size: 1rem;
+        }
+
         /* 応援メッセージ */
         .recommend {
             background: linear-gradient(180deg, var(--cream) 0%, white 100%);
@@ -1648,6 +1833,19 @@
                 text-align: left;
             }
 
+            /* 拡張プロフィール - タブレット */
+            .career-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .career-grid .career-category:last-child {
+                grid-column: span 2;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
             nav {
                 padding: 1rem 1.5rem;
             }
@@ -1743,6 +1941,38 @@
 
             .cursor {
                 display: none;
+            }
+
+            /* 拡張プロフィール - モバイル */
+            .career-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .career-category {
+                padding: 1.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .skill-card {
+                padding: 1.2rem;
+            }
+
+            .personality-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .personality-card {
+                padding: 1.8rem;
+            }
+
+            .profile-section-title {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -2111,40 +2341,99 @@
 
                 <div class="profile-info">
                     <div class="profile-item">
-                        <span class="profile-label">経歴</span>
-                        <span class="profile-value">
-                            城里町教育委員会 教育委員<br>
-                            PTA本部役員 12年歴任（元PTA会長）
-                        </span>
+                        <span class="profile-label">氏名</span>
+                        <span class="profile-value">田口 優子（たぐち ゆうこ）</span>
                     </div>
                     <div class="profile-item">
-                        <span class="profile-label">勤務歴</span>
-                        <span class="profile-value">
-                            高萩市立秋山小学校<br>
-                            高萩市立松岡小学校<br>
-                            友部市立大原小学校<br>
-                            常陸大宮市村田小学校<br>
-                            常陸大宮市大賀小学校<br>
-                            旧桂村立北方小学校<br>
-                            城里町立常北幼稚園<br>
-                            こばと東保育園<br>
-                            マッサージハウス水戸店
-                        </span>
-                    </div>
-                    <div class="profile-item">
-                        <span class="profile-label">地域活動</span>
-                        <span class="profile-value">和太鼓奏者、アロマセラピスト</span>
+                        <span class="profile-label">現職</span>
+                        <span class="profile-value">城里町教育委員会 教育委員</span>
                     </div>
                     <div class="profile-item">
                         <span class="profile-label">家族</span>
                         <span class="profile-value">母（介護中）、息子（高校生）</span>
                     </div>
-                    <div class="profile-item">
-                        <span class="profile-label">性格</span>
-                        <span class="profile-value">
-                            頼まれたら断れない性格<br>
-                            とにかく行動派（赤い服でマウンテンバイクに乗り、町中を駆け回っています！）
-                        </span>
+                </div>
+            </div>
+
+            <!-- キャリア詳細 -->
+            <div class="profile-extended">
+                <h3 class="profile-section-title">これまでのあゆみ</h3>
+
+                <div class="career-grid">
+                    <!-- 教育機関（小学校） -->
+                    <div class="career-category">
+                        <div class="career-icon">🏫</div>
+                        <h4 class="career-category-title">小学校勤務</h4>
+                        <p class="career-count">6校で教壇に立つ</p>
+                        <ul class="career-list">
+                            <li>高萩市立秋山小学校</li>
+                            <li>高萩市立松岡小学校</li>
+                            <li>友部市立大原小学校</li>
+                            <li>常陸大宮市村田小学校</li>
+                            <li>常陸大宮市大賀小学校</li>
+                            <li>旧桂村立北方小学校</li>
+                        </ul>
+                    </div>
+
+                    <!-- 幼稚園・保育園 -->
+                    <div class="career-category">
+                        <div class="career-icon">👶</div>
+                        <h4 class="career-category-title">幼稚園・保育園</h4>
+                        <p class="career-count">乳幼児教育にも従事</p>
+                        <ul class="career-list">
+                            <li>城里町立常北幼稚園</li>
+                            <li>こばと東保育園</li>
+                        </ul>
+                    </div>
+
+                    <!-- その他の経験 -->
+                    <div class="career-category">
+                        <div class="career-icon">💼</div>
+                        <h4 class="career-category-title">多彩な経験</h4>
+                        <p class="career-count">様々な立場で地域に貢献</p>
+                        <ul class="career-list">
+                            <li>城里町教育委員会 教育委員</li>
+                            <li>PTA本部役員 12年歴任</li>
+                            <li>PTA会長経験者</li>
+                            <li>マッサージハウス水戸店</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 特技・資格 -->
+                <h3 class="profile-section-title">得意なこと</h3>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <span class="skill-icon">🥁</span>
+                        <span class="skill-name">和太鼓奏者</span>
+                    </div>
+                    <div class="skill-card">
+                        <span class="skill-icon">🌿</span>
+                        <span class="skill-name">アロマセラピスト</span>
+                    </div>
+                    <div class="skill-card">
+                        <span class="skill-icon">🚴</span>
+                        <span class="skill-name">マウンテンバイク</span>
+                    </div>
+                    <div class="skill-card">
+                        <span class="skill-icon">❤️</span>
+                        <span class="skill-name">介護経験</span>
+                    </div>
+                </div>
+
+                <!-- 人柄 -->
+                <div class="personality-section">
+                    <div class="personality-card">
+                        <h4 class="personality-title">🤝 頼まれたら断れない性格</h4>
+                        <p class="personality-text">
+                            困っている人を見ると放っておけない。「おせっかい」と言われても、誰かの役に立ちたい。それが私のモットーです。
+                        </p>
+                    </div>
+                    <div class="personality-card">
+                        <h4 class="personality-title">🏃 とにかく行動派</h4>
+                        <p class="personality-text">
+                            赤い服でマウンテンバイクに乗り、町中を駆け回っています。じっとしていられない性格で、現場第一主義を貫きます。
+                        </p>
                     </div>
                 </div>
             </div>
@@ -2308,7 +2597,7 @@
         }, observerOptions);
 
         // 全てのアニメーション要素を監視
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .policy-card, .number-card, .voice-card, .profile-item, .story-body p, .belief-text .line, .belief-signature').forEach(el => {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .policy-card, .number-card, .voice-card, .profile-item, .story-body p, .belief-text .line, .belief-signature, .career-category, .skill-card, .personality-card').forEach(el => {
             observer.observe(el);
         });
 
