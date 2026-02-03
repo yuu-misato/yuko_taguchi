@@ -1293,6 +1293,378 @@
             color: rgba(255,255,255,0.9);
         }
 
+        /* 危機感セクション - 城里町の今 */
+        .crisis {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .crisis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(217, 55, 68, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(217, 55, 68, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .crisis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .crisis-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .crisis-label {
+            display: inline-block;
+            background: var(--red-primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(217, 55, 68, 0.5); }
+            50% { box-shadow: 0 0 20px 10px rgba(217, 55, 68, 0); }
+        }
+
+        .crisis-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: white;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .crisis-title span {
+            color: var(--red-primary);
+        }
+
+        .crisis-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* 危機の数字グリッド */
+        .crisis-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .crisis-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .crisis-stat.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .crisis-stat:nth-child(2) { transition-delay: 0.15s; }
+        .crisis-stat:nth-child(3) { transition-delay: 0.3s; }
+
+        .crisis-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red-primary), var(--red-deep));
+        }
+
+        .crisis-stat-number {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--red-primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .crisis-stat-number span {
+            font-size: 0.5em;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .crisis-stat-label {
+            font-size: 1.1rem;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .crisis-stat-desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        /* 人口推移グラフ風表示 */
+        .crisis-timeline {
+            background: rgba(255,255,255,0.02);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .crisis-timeline-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .population-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 200px;
+            padding: 0 1rem;
+        }
+
+        .population-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .bar-wrapper {
+            width: 60px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, var(--red-primary), var(--red-deep));
+            border-radius: 10px 10px 0 0;
+            transition: height 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bar-fill.future {
+            background: linear-gradient(180deg, rgba(217, 55, 68, 0.4), rgba(139, 35, 50, 0.4));
+            border: 2px dashed var(--red-primary);
+            border-bottom: none;
+        }
+
+        .bar-value {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.3rem;
+        }
+
+        .bar-year {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .bar-change {
+            font-size: 0.75rem;
+            color: var(--red-primary);
+            margin-top: 0.3rem;
+        }
+
+        /* 対比セクション */
+        .crisis-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: stretch;
+            margin-bottom: 4rem;
+        }
+
+        .comparison-card {
+            border-radius: 25px;
+            padding: 2.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .comparison-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .comparison-card.dark {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-card.bright {
+            background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
+            transform: translateX(30px);
+        }
+
+        .comparison-card.bright.visible {
+            transform: translateX(0);
+        }
+
+        .comparison-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .comparison-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-icon {
+            font-size: 1.2rem;
+        }
+
+        .comparison-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            align-self: center;
+            flex-shrink: 0;
+        }
+
+        /* 町民の声（危機バージョン） */
+        .crisis-voices {
+            margin-top: 3rem;
+        }
+
+        .crisis-voices-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .crisis-voices-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .crisis-voice {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 1.5rem;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .crisis-voice.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .crisis-voice:nth-child(2) { transition-delay: 0.1s; }
+        .crisis-voice:nth-child(3) { transition-delay: 0.2s; }
+
+        .crisis-voice-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .crisis-voice-author {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* CTA風メッセージ */
+        .crisis-cta {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .crisis-cta-text {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: white;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .crisis-cta-text span {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .crisis-cta-sub {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+        }
+
         /* 拡張プロフィール - キャリアタイムライン */
         .profile-extended {
             margin-top: 4rem;
@@ -1846,6 +2218,36 @@
                 grid-template-columns: repeat(4, 1fr);
             }
 
+            /* 危機感セクション - タブレット */
+            .crisis-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .crisis-comparison {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .comparison-arrow {
+                transform: rotate(90deg);
+                margin: 0 auto;
+            }
+
+            .crisis-voices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .population-bars {
+                flex-wrap: wrap;
+                height: auto;
+                gap: 1.5rem;
+            }
+
+            .population-bar {
+                flex: 1 1 45%;
+            }
+
             nav {
                 padding: 1rem 1.5rem;
             }
@@ -1974,6 +2376,58 @@
             .profile-section-title {
                 font-size: 1.2rem;
             }
+
+            /* 危機感セクション - モバイル */
+            .crisis-stat {
+                padding: 2rem 1.5rem;
+            }
+
+            .crisis-stat-number {
+                font-size: 2.2rem;
+            }
+
+            .crisis-timeline {
+                padding: 2rem 1.5rem;
+            }
+
+            .population-bar {
+                flex: 1 1 100%;
+            }
+
+            .bar-wrapper {
+                width: 100%;
+                height: 40px !important;
+            }
+
+            .bar-fill {
+                width: 0;
+                height: 100% !important;
+                border-radius: 0 10px 10px 0 !important;
+                transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .population-bars {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .population-bar {
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .comparison-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .crisis-voice {
+                padding: 1.2rem;
+            }
+
+            .crisis-cta-text {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -2041,6 +2495,131 @@
         <div class="hero-scroll">
             <span class="hero-scroll-text">SCROLL</span>
             <span class="hero-scroll-line"></span>
+        </div>
+    </section>
+
+    <!-- 危機感セクション - 城里町の今 -->
+    <section class="crisis">
+        <div class="crisis-container">
+            <div class="crisis-header reveal">
+                <span class="crisis-label">今、知ってほしい</span>
+                <h2 class="crisis-title">城里町は、<span>静かに消えようとしています</span></h2>
+                <p class="crisis-subtitle">このままでは、私たちの町がなくなってしまう</p>
+            </div>
+
+            <!-- 危機の数字 -->
+            <div class="crisis-stats">
+                <div class="crisis-stat">
+                    <div class="crisis-stat-number">-5,000<span>人</span></div>
+                    <p class="crisis-stat-label">20年間で失われた人口</p>
+                    <p class="crisis-stat-desc">2000年：23,007人 → 2024年：17,967人<br>21年連続で人口が減り続けています</p>
+                </div>
+                <div class="crisis-stat">
+                    <div class="crisis-stat-number">37.5<span>%</span></div>
+                    <p class="crisis-stat-label">高齢化率</p>
+                    <p class="crisis-stat-desc">全国平均28.7%を大きく上回り<br>2.6人に1人が65歳以上です</p>
+                </div>
+                <div class="crisis-stat">
+                    <div class="crisis-stat-number">58.8<span>%</span></div>
+                    <p class="crisis-stat-label">2050年の高齢化率予測</p>
+                    <p class="crisis-stat-desc">このままでは約6割が高齢者に<br>誰が町を支えるのでしょうか</p>
+                </div>
+            </div>
+
+            <!-- 人口推移ビジュアル -->
+            <div class="crisis-timeline reveal">
+                <h3 class="crisis-timeline-title">城里町の人口推移</h3>
+                <div class="population-bars">
+                    <div class="population-bar">
+                        <div class="bar-wrapper" style="height: 180px;">
+                            <div class="bar-fill" data-height="100%"></div>
+                        </div>
+                        <span class="bar-value">23,007</span>
+                        <span class="bar-year">2000年</span>
+                    </div>
+                    <div class="population-bar">
+                        <div class="bar-wrapper" style="height: 180px;">
+                            <div class="bar-fill" data-height="79%"></div>
+                        </div>
+                        <span class="bar-value">18,097</span>
+                        <span class="bar-year">2020年</span>
+                        <span class="bar-change">▲21%</span>
+                    </div>
+                    <div class="population-bar">
+                        <div class="bar-wrapper" style="height: 180px;">
+                            <div class="bar-fill" data-height="78%"></div>
+                        </div>
+                        <span class="bar-value">17,967</span>
+                        <span class="bar-year">2024年</span>
+                        <span class="bar-change">21年連続減</span>
+                    </div>
+                    <div class="population-bar">
+                        <div class="bar-wrapper" style="height: 180px;">
+                            <div class="bar-fill future" data-height="60%"></div>
+                        </div>
+                        <span class="bar-value">13,856</span>
+                        <span class="bar-year">2040年予測</span>
+                        <span class="bar-change">さらに▲23%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 対比：現状 vs 未来 -->
+            <div class="crisis-comparison">
+                <div class="comparison-card dark">
+                    <span class="comparison-label">このままでは...</span>
+                    <h3 class="comparison-title">消えゆく城里町</h3>
+                    <ul class="comparison-list">
+                        <li><span class="comparison-icon">😔</span>若者が出ていき、戻ってこない</li>
+                        <li><span class="comparison-icon">🏥</span>病院が遠くて通えない</li>
+                        <li><span class="comparison-icon">🏫</span>学校がどんどん統廃合される</li>
+                        <li><span class="comparison-icon">🛒</span>買い物できる場所がなくなる</li>
+                        <li><span class="comparison-icon">👴</span>独居高齢者が孤立していく</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-arrow">→</div>
+
+                <div class="comparison-card bright">
+                    <span class="comparison-label">田口優子と一緒に</span>
+                    <h3 class="comparison-title">つながりで守る城里町</h3>
+                    <ul class="comparison-list">
+                        <li><span class="comparison-icon">🌱</span>子どもが安心して育つ居場所</li>
+                        <li><span class="comparison-icon">🤝</span>世代を超えた支え合い</li>
+                        <li><span class="comparison-icon">🏠</span>空き家を地域の拠点に</li>
+                        <li><span class="comparison-icon">❤️</span>「おせっかい」が当たり前の文化</li>
+                        <li><span class="comparison-icon">✨</span>小さくても幸せな町へ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 町民の声 -->
+            <div class="crisis-voices">
+                <h3 class="crisis-voices-title">こんな声が聞こえてきます</h3>
+                <div class="crisis-voices-grid">
+                    <div class="crisis-voice">
+                        <p class="crisis-voice-text">「子どもの友達が少なくて、遊び相手がいない。習い事も町外まで送り迎えが必要で大変...」</p>
+                        <span class="crisis-voice-author">— 30代 子育て中の母親</span>
+                    </div>
+                    <div class="crisis-voice">
+                        <p class="crisis-voice-text">「免許を返納したいけど、バスも少ないし、病院にどうやって通えばいいのか不安です」</p>
+                        <span class="crisis-voice-author">— 70代 一人暮らしの女性</span>
+                    </div>
+                    <div class="crisis-voice">
+                        <p class="crisis-voice-text">「実家に帰りたいけど、仕事がない。このままじゃ親の介護も難しい...」</p>
+                        <span class="crisis-voice-author">— 40代 都内在住の男性</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行動を促すメッセージ -->
+            <div class="crisis-cta reveal">
+                <p class="crisis-cta-text">
+                    今、変わらなければ<br>
+                    <span>次はいつ変われるのでしょうか。</span>
+                </p>
+                <p class="crisis-cta-sub">一人ひとりの「おせっかい」が、城里町を救う力になります。</p>
+            </div>
         </div>
     </section>
 
@@ -2139,12 +2718,12 @@
                 <div class="number-card">
                     <div class="number-value">12<span class="number-unit">年</span></div>
                     <p class="number-label">PTA活動歴</p>
-                    <p class="number-desc">本部役員として12年間、<br>保護者と学校の架け橋に</p>
+                    <p class="number-desc">本部役員12年・会長6年<br>保護者と学校の架け橋に</p>
                 </div>
                 <div class="number-card">
-                    <div class="number-value">3<span class="number-unit">度</span></div>
-                    <p class="number-label">出馬要請</p>
-                    <p class="number-desc">地域の方々からの熱い想いを受け、<br>ついに決意</p>
+                    <div class="number-value">11<span class="number-unit">年</span></div>
+                    <p class="number-label">消防団活動</p>
+                    <p class="number-desc">城里町消防団員として<br>地域の安全を守り続ける</p>
                 </div>
                 <div class="number-card">
                     <div class="number-value">1<span class="number-unit">つ</span></div>
@@ -2389,12 +2968,14 @@
                     <!-- その他の経験 -->
                     <div class="career-category">
                         <div class="career-icon">💼</div>
-                        <h4 class="career-category-title">多彩な経験</h4>
-                        <p class="career-count">様々な立場で地域に貢献</p>
+                        <h4 class="career-category-title">地域貢献活動</h4>
+                        <p class="career-count">地域の最前線で活動</p>
                         <ul class="career-list">
                             <li>城里町教育委員会 教育委員</li>
-                            <li>PTA本部役員 12年歴任</li>
-                            <li>PTA会長経験者</li>
+                            <li>城里町PTA連絡協議会役員</li>
+                            <li>幼小中PTA本部役員 12年</li>
+                            <li>PTA会長 6年</li>
+                            <li>城里町消防団 11年</li>
                             <li>マッサージハウス水戸店</li>
                         </ul>
                     </div>
@@ -2597,9 +3178,29 @@
         }, observerOptions);
 
         // 全てのアニメーション要素を監視
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .policy-card, .number-card, .voice-card, .profile-item, .story-body p, .belief-text .line, .belief-signature, .career-category, .skill-card, .personality-card').forEach(el => {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .policy-card, .number-card, .voice-card, .profile-item, .story-body p, .belief-text .line, .belief-signature, .career-category, .skill-card, .personality-card, .crisis-stat, .comparison-card, .crisis-voice').forEach(el => {
             observer.observe(el);
         });
+
+        // 人口バーのアニメーション
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bars = entry.target.querySelectorAll('.bar-fill');
+                    bars.forEach(bar => {
+                        const height = bar.dataset.height;
+                        setTimeout(() => {
+                            bar.style.height = height;
+                        }, 300);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const timeline = document.querySelector('.crisis-timeline');
+        if (timeline) {
+            barObserver.observe(timeline);
+        }
 
         // パララックス効果
         let ticking = false;
