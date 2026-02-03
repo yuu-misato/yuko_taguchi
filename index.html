@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>田口優子 - 優しさの連鎖で、心響きあう城里町へ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-primary: #D93744;
+            --red-deep: #B91C2E;
+            --red-light: #FF6B7A;
+            --red-pale: #FFE8EA;
+            --cream: #FFFCF8;
+            --cream-dark: #F5EBE0;
+            --gold: #C9A86C;
+            --gold-light: #E8D5B0;
+            --text-dark: #1A1A1A;
+            --text-gray: #666;
+            --line-green: #06C755;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            line-height: 2;
+            font-size: 17px;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* ローディング画面 */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--red-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: white;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            overflow: hidden;
+        }
+
+        .loader-text span {
+            display: inline-block;
+            animation: loadReveal 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        .loader-text span:nth-child(1) { animation-delay: 0.1s; }
+        .loader-text span:nth-child(2) { animation-delay: 0.2s; }
+        .loader-text span:nth-child(3) { animation-delay: 0.3s; }
+        .loader-text span:nth-child(4) { animation-delay: 0.4s; }
+
+        .loader-subtitle {
+            font-family: 'Shippori Mincho', serif;
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        @keyframes loadReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* カスタムカーソル */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--red-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.active {
+            transform: scale(2.5);
+            background: rgba(255,255,255,0.2);
+            border-color: white;
+        }
+
+        /* プログレスバー */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red-primary), var(--gold));
+            z-index: 1000;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* ナビゲーション */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+            padding: 1rem 3rem;
+        }
+
+        nav.scrolled .nav-logo {
+            color: var(--text-dark);
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--text-dark);
+        }
+
+        .nav-logo {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            transition: color 0.4s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.4s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            height: 100vh;
+            min-height: 900px;
+            background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-deep) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-shapes {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .hero-bg-circle:nth-child(1) {
+            width: 800px;
+            height: 800px;
+            background: white;
+            top: -400px;
+            right: -200px;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .hero-bg-circle:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            background: var(--gold);
+            bottom: -300px;
+            left: -200px;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        .hero-bg-circle:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: white;
+            top: 50%;
+            left: 30%;
+            animation: float3 15s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, 50px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -30px) scale(1.05); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(20rem, 50vw, 60rem);
+            font-weight: 800;
+            color: rgba(255,255,255,0.03);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 1s ease 0.3s forwards;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        .hero-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: heroFadeUp 1s ease 0.5s forwards;
+        }
+
+        .hero-name-en {
+            font-size: 1rem;
+            letter-spacing: 0.4em;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 1s ease 0.7s forwards;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .hero-catchcopy {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 500;
+            line-height: 1.9;
+            letter-spacing: 0.08em;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeUp 1s ease 0.9s forwards;
+            position: relative;
+        }
+
+        .hero-catchcopy-highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-catchcopy-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--gold);
+            opacity: 0.5;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: underlineReveal 0.8s ease 1.5s forwards;
+        }
+
+        @keyframes underlineReveal {
+            to { transform: scaleX(1); }
+        }
+
+        .hero-sub {
+            margin-top: 2rem;
+            font-size: 1.05rem;
+            line-height: 2;
+            opacity: 0;
+            animation: heroFadeUp 1s ease 1.1s forwards;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .hero-photo-wrapper {
+            position: relative;
+            opacity: 0;
+            transform: translateX(50px) scale(0.95);
+            animation: heroPhotoReveal 1.2s ease 0.6s forwards;
+        }
+
+        @keyframes heroPhotoReveal {
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .hero-photo-frame {
+            position: relative;
+        }
+
+        .hero-photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--gold);
+            border-radius: 0 80px 0 80px;
+            opacity: 0.5;
+        }
+
+        .hero-photo {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 3/4;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 0 80px 0 80px;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+
+        .hero-photo-placeholder {
+            font-family: 'Shippori Mincho', serif;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-photo-deco {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero-photo-deco::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .hero-scroll-text {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl;
+        }
+
+        .hero-scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, white, transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.5); opacity: 0.5; }
+        }
+
+        /* 想いセクション（新規追加） */
+        .belief {
+            background: var(--text-dark);
+            color: white;
+            padding: clamp(6rem, 15vw, 12rem) clamp(1.5rem, 5vw, 5rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .belief::before {
+            content: '"';
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(20rem, 50vw, 50rem);
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            color: rgba(255,255,255,0.02);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .belief-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .belief-text {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            line-height: 2.5;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+        }
+
+        .belief-text .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .belief-text .line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .belief-highlight {
+            color: var(--red-light);
+            position: relative;
+        }
+
+        .belief-signature {
+            margin-top: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.5s;
+        }
+
+        .belief-signature.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .belief-signature-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+        }
+
+        /* マーキーセクション */
+        .marquee-section {
+            background: var(--red-primary);
+            padding: 1.2rem 0;
+            overflow: hidden;
+        }
+
+        .marquee {
+            display: flex;
+            animation: marquee 40s linear infinite;
+        }
+
+        .marquee-text {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            color: white;
+            white-space: nowrap;
+            padding: 0 3rem;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+        }
+
+        .marquee-divider {
+            color: var(--gold);
+            padding: 0 1rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* セクション共通 */
+        section {
+            padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+        }
+
+        .section-header {
+            margin-bottom: clamp(3rem, 8vw, 6rem);
+            text-align: center;
+        }
+
+        .section-num {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            color: var(--red-primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            line-height: 1.4;
+        }
+
+        .section-title-en {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--text-gray);
+            margin-top: 1rem;
+            font-weight: 400;
+        }
+
+        /* ストーリーセクション */
+        .story {
+            background: var(--cream);
+            position: relative;
+        }
+
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: clamp(3rem, 8vw, 6rem);
+            align-items: start;
+        }
+
+        .story-visual {
+            position: relative;
+            position: sticky;
+            top: 120px;
+        }
+
+        .story-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--red-light) 0%, var(--red-primary) 100%);
+            border-radius: 0 120px 0 120px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(217, 55, 68, 0.2);
+        }
+
+        .story-image-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.5);
+            font-family: 'Shippori Mincho', serif;
+            letter-spacing: 0.1em;
+        }
+
+        .story-deco {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+            animation: floatSlow 8s ease-in-out infinite;
+        }
+
+        .story-deco-2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+            opacity: 0.5;
+            animation: floatSlow 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .story-text-area {
+            padding-top: 1rem;
+        }
+
+        .story-lead {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 600;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            color: var(--red-deep);
+            letter-spacing: 0.05em;
+        }
+
+        .story-body {
+            font-size: clamp(1rem, 1.8vw, 1.1rem);
+            line-height: 2.5;
+            color: var(--text-dark);
+        }
+
+        .story-body p {
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .story-body p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-highlight {
+            background: linear-gradient(transparent 60%, var(--red-pale) 60%);
+            font-weight: 500;
+        }
+
+        .story-quote {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            margin: 3rem 0;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--red-primary);
+        }
+
+        .story-quote::before {
+            content: '優';
+            font-family: 'Shippori Mincho', serif;
+            font-size: 10rem;
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            color: var(--red-primary);
+            opacity: 0.05;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .story-quote p {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            line-height: 2.2;
+            color: var(--red-deep);
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin-bottom: 0 !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* 数字で見るセクション（新規追加） */
+        .numbers {
+            background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-deep) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .numbers::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .numbers .section-num {
+            color: var(--gold);
+        }
+
+        .numbers .section-title {
+            color: white;
+        }
+
+        .numbers .section-title-en {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .numbers-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .number-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .number-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .number-card:nth-child(2) { transition-delay: 0.15s; }
+        .number-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .number-value {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(4rem, 10vw, 6rem);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, white 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .number-unit {
+            font-size: 1.5rem;
+            -webkit-text-fill-color: var(--gold);
+        }
+
+        .number-label {
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1rem;
+        }
+
+        .number-desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        /* 政策セクション */
+        .policy {
+            background: white;
+            position: relative;
+        }
+
+        .policy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, var(--red-pale) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, var(--gold-light) 0%, transparent 40%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .policy-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .policy-grid {
+            display: grid;
+            gap: 5rem;
+        }
+
+        .policy-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(3rem, 6vw, 5rem);
+            align-items: center;
+            padding: clamp(3rem, 6vw, 5rem);
+            background: var(--cream);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(60px);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+        }
+
+        .policy-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .policy-card:nth-child(even) {
+            direction: rtl;
+        }
+
+        .policy-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .policy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--red-primary), var(--gold));
+        }
+
+        .policy-visual {
+            position: relative;
+        }
+
+        .policy-num-large {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(8rem, 20vw, 15rem);
+            font-weight: 800;
+            color: var(--red-primary);
+            opacity: 0.08;
+            line-height: 1;
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            pointer-events: none;
+        }
+
+        .policy-icon {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--red-light) 0%, var(--red-primary) 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: morphShape 8s ease-in-out infinite;
+            box-shadow: 0 30px 60px rgba(217, 55, 68, 0.25);
+        }
+
+        @keyframes morphShape {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+
+        .policy-icon-inner {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            opacity: 0.3;
+        }
+
+        .policy-content {
+            padding: 1rem 0;
+        }
+
+        .policy-category {
+            display: inline-block;
+            background: var(--red-primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.03em;
+        }
+
+        .policy-description {
+            font-size: 1.05rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 2;
+        }
+
+        .policy-list {
+            list-style: none;
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .policy-list li {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .policy-list-icon {
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .policy-list-text strong {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .policy-list-text span {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* 町民の声セクション（新規追加） */
+        .voices {
+            background: var(--cream-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .voices-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .voices-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .voice-card {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .voice-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .voice-card:nth-child(2) { transition-delay: 0.1s; }
+        .voice-card:nth-child(3) { transition-delay: 0.2s; }
+
+        .voice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.1);
+        }
+
+        .voice-quote {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 3rem;
+            color: var(--red-primary);
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .voice-text {
+            font-size: 1.05rem;
+            line-height: 2;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .voice-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .voice-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .voice-info {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        .voice-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* プロフィールセクション */
+        .profile {
+            background: var(--text-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile::before {
+            content: 'YUKO TAGUCHI';
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(8rem, 20vw, 18rem);
+            font-weight: 800;
+            position: absolute;
+            bottom: -5%;
+            right: -5%;
+            color: rgba(255,255,255,0.02);
+            pointer-events: none;
+            letter-spacing: -0.03em;
+            white-space: nowrap;
+        }
+
+        .profile .section-num {
+            color: var(--gold);
+        }
+
+        .profile .section-title {
+            color: white;
+        }
+
+        .profile .section-title-en {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: clamp(3rem, 8vw, 6rem);
+            align-items: center;
+        }
+
+        .profile-photo-area {
+            position: relative;
+        }
+
+        .profile-photo {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: morphProfile 10s ease-in-out infinite;
+            box-shadow: 0 30px 80px rgba(217, 55, 68, 0.3);
+        }
+
+        @keyframes morphProfile {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+
+        .profile-photo-inner {
+            color: rgba(255,255,255,0.5);
+            font-family: 'Shippori Mincho', serif;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        .profile-tagline {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--text-dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            letter-spacing: 0.1em;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .profile-info {
+            display: grid;
+            gap: 0;
+        }
+
+        .profile-item {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 2rem;
+            align-items: start;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .profile-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .profile-item:nth-child(2) { transition-delay: 0.1s; }
+        .profile-item:nth-child(3) { transition-delay: 0.2s; }
+        .profile-item:nth-child(4) { transition-delay: 0.3s; }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .profile-value {
+            font-size: 1.05rem;
+            line-height: 2;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* 応援メッセージ */
+        .recommend {
+            background: linear-gradient(180deg, var(--cream) 0%, white 100%);
+        }
+
+        .recommend-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .recommend-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .recommend-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red-primary), var(--gold));
+        }
+
+        .recommend-quote-mark {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 5rem;
+            color: var(--red-primary);
+            opacity: 0.1;
+            line-height: 1;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+
+        .recommend-text {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.05rem;
+            line-height: 2.2;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.02em;
+        }
+
+        .recommend-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .recommend-author-photo {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Shippori Mincho', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(217, 55, 68, 0.25);
+        }
+
+        .recommend-author-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .recommend-author-title {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* CTAセクション */
+        .cta {
+            background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-deep) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 10rem;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 70%, var(--red-light) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, var(--red-deep) 0%, transparent 50%);
+            opacity: 0.4;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-lead {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .cta-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 3rem;
+            letter-spacing: 0.08em;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--line-green);
+            color: white;
+            padding: 1.5rem 4rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.35rem;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(6, 199, 85, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 30px 70px rgba(6, 199, 85, 0.5);
+        }
+
+        .cta-button svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .cta-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* フローティングボタン */
+        .floating-cta {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .floating-cta.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .floating-cta a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--line-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 10px 40px rgba(6, 199, 85, 0.5);
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+        }
+
+        .floating-cta a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(6, 199, 85, 0.6);
+        }
+
+        .floating-cta svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* フッター */
+        footer {
+            background: #0a0a0a;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .footer-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+        }
+
+        .footer-tagline {
+            font-size: 0.95rem;
+            opacity: 0.5;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            opacity: 0.3;
+        }
+
+        /* アニメーション共通 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 0 2rem;
+            }
+
+            .hero-photo-wrapper {
+                display: none;
+            }
+
+            .hero-label {
+                justify-content: center;
+            }
+
+            .story-content {
+                grid-template-columns: 1fr;
+            }
+
+            .story-visual {
+                position: relative;
+                top: 0;
+                max-width: 400px;
+                margin: 0 auto 3rem;
+            }
+
+            .numbers-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .policy-card {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-card:nth-child(even) {
+                direction: ltr;
+            }
+
+            .policy-visual {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .voices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recommend-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-icon {
+                width: 220px;
+                max-width: 220px;
+                margin: 0 auto 1.5rem;
+            }
+
+            .profile-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-photo {
+                margin: 0 auto;
+                max-width: 300px;
+            }
+
+            .profile-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: left;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 4rem 1.2rem;
+            }
+
+            .hero {
+                min-height: 100vh;
+            }
+
+            .hero-name {
+                font-size: 2.8rem;
+            }
+
+            .belief-text {
+                font-size: 1.2rem;
+            }
+
+            .marquee-text {
+                font-size: 0.95rem;
+            }
+
+            .story-quote {
+                padding: 2rem 1.5rem;
+            }
+
+            .policy-card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 25px;
+            }
+
+            .policy-icon {
+                width: 200px;
+                max-width: 200px;
+                margin: 0 auto 1rem;
+            }
+
+            .policy-icon-inner {
+                font-size: 3rem;
+            }
+
+            .recommend-grid {
+                gap: 1.5rem;
+            }
+
+            .recommend-card {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+
+            .recommend-quote-mark {
+                font-size: 3rem;
+                top: 10px;
+                left: 15px;
+            }
+
+            .recommend-text {
+                font-size: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .recommend-card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 30px;
+            }
+
+            .cta-button {
+                padding: 1.2rem 2.5rem;
+                font-size: 1.15rem;
+            }
+
+            .floating-cta {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .floating-cta a {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- プログレスバー -->
+    <div class="progress-bar"></div>
+
+    <!-- ローディング画面 -->
+    <div class="loader">
+        <div class="loader-text">
+            <span>田</span><span>口</span><span>優</span><span>子</span>
+        </div>
+        <p class="loader-subtitle">優しさの連鎖で、心響きあう城里町へ</p>
+    </div>
+
+    <!-- カスタムカーソル -->
+    <div class="cursor"></div>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <div class="nav-logo">田口優子</div>
+        <ul class="nav-links">
+            <li><a href="#story">想い</a></li>
+            <li><a href="#policy">政策</a></li>
+            <li><a href="#profile">プロフィール</a></li>
+            <li><a href="#recommend">応援</a></li>
+        </ul>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="hero-bg-shapes">
+            <div class="hero-bg-circle"></div>
+            <div class="hero-bg-circle"></div>
+            <div class="hero-bg-circle"></div>
+        </div>
+        <div class="hero-bg-text parallax-element" data-speed="0.03">優</div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-label">
+                    城里町の未来へ挑戦
+                </div>
+                <h1 class="hero-name">田口優子</h1>
+                <p class="hero-name-en">TAGUCHI YUKO</p>
+                <p class="hero-catchcopy">
+                    <span class="hero-catchcopy-highlight">優しさの連鎖</span>で、<br>
+                    心響きあう城里町へ。
+                </p>
+                <p class="hero-sub">
+                    子どもも高齢者も、誰もが主役になれる<br>
+                    「幸福度No.1」のまちづくりを目指して。
+                </p>
+            </div>
+            <div class="hero-photo-wrapper">
+                <div class="hero-photo-frame">
+                    <div class="hero-photo">
+                        <div class="hero-photo-placeholder">
+                            写真準備中
+                        </div>
+                    </div>
+                    <div class="hero-photo-deco"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span class="hero-scroll-text">SCROLL</span>
+            <span class="hero-scroll-line"></span>
+        </div>
+    </section>
+
+    <!-- 想いセクション（インパクト大） -->
+    <section class="belief">
+        <div class="belief-container">
+            <div class="belief-text">
+                <span class="line">「おせっかい」と言われても、</span>
+                <span class="line">困っている人がいたら、</span>
+                <span class="line"><span class="belief-highlight">放っておけない。</span></span>
+                <span class="line" style="margin-top: 1.5em;">それが、私です。</span>
+            </div>
+            <div class="belief-signature">
+                <p class="belief-signature-name">田口優子</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- マーキー -->
+    <div class="marquee-section">
+        <div class="marquee">
+            <span class="marquee-text">元教員・PTA会長12年</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">教育と地域をつなぐ</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">和太鼓奏者</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">走る！叩く！熱血おせっかい</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">元教員・PTA会長12年</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">教育と地域をつなぐ</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">和太鼓奏者</span>
+            <span class="marquee-divider">◆</span>
+            <span class="marquee-text">走る！叩く！熱血おせっかい</span>
+            <span class="marquee-divider">◆</span>
+        </div>
+    </div>
+
+    <!-- ストーリーセクション -->
+    <section class="story" id="story">
+        <div class="story-container">
+            <div class="section-header reveal">
+                <span class="section-num">01</span>
+                <h2 class="section-title">私の想い</h2>
+                <p class="section-title-en">MY STORY</p>
+            </div>
+
+            <div class="story-content">
+                <div class="story-visual reveal-left">
+                    <div class="story-image">
+                        <div class="story-image-inner">写真準備中</div>
+                    </div>
+                    <div class="story-deco"></div>
+                    <div class="story-deco-2"></div>
+                </div>
+
+                <div class="story-text-area">
+                    <h3 class="story-lead reveal-right">
+                        「優しい子どもたちを育む町」<br>
+                        それが、私の夢です。
+                    </h3>
+
+                    <div class="story-body">
+                        <p>私は、この<span class="story-highlight">城里町が大好き</span>です。</p>
+
+                        <p>だからこそ、教育委員として目の当たりにした<span class="story-highlight">「不登校の子どもたち」の増加</span>や、一人暮らしの高齢者の孤立という現実に、これ以上「見て見ぬふり」はできませんでした。</p>
+
+                        <p>3度の出馬要請を受け、<span class="story-highlight">「誰かがやらなきゃいけないなら、私がやる」</span>と腹を括りました。</p>
+
+                        <div class="story-quote">
+                            <p>私の名前の「優」は、「優しい」という字です。<br>
+                            制度や建前だけでなく、人と人との「優しさ」でつながる町を作りたい。</p>
+                        </div>
+
+                        <p>元教員として、一人の母親として、そして城里を愛する一人の住民として。</p>
+
+                        <p>皆さんの声を力に変えて、<span class="story-highlight">私が城里町の新しいリズムを作ります。</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数字で見るセクション -->
+    <section class="numbers">
+        <div class="numbers-container">
+            <div class="section-header reveal">
+                <span class="section-num">02</span>
+                <h2 class="section-title">数字で見る田口優子</h2>
+                <p class="section-title-en">NUMBERS</p>
+            </div>
+
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <div class="number-value">12<span class="number-unit">年</span></div>
+                    <p class="number-label">PTA活動歴</p>
+                    <p class="number-desc">本部役員として12年間、<br>保護者と学校の架け橋に</p>
+                </div>
+                <div class="number-card">
+                    <div class="number-value">3<span class="number-unit">度</span></div>
+                    <p class="number-label">出馬要請</p>
+                    <p class="number-desc">地域の方々からの熱い想いを受け、<br>ついに決意</p>
+                </div>
+                <div class="number-card">
+                    <div class="number-value">1<span class="number-unit">つ</span></div>
+                    <p class="number-label">変わらぬ信念</p>
+                    <p class="number-desc">困っている人を<br>放っておかない</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 政策セクション -->
+    <section class="policy" id="policy">
+        <div class="policy-container">
+            <div class="section-header reveal">
+                <span class="section-num">03</span>
+                <h2 class="section-title">３つのお約束</h2>
+                <p class="section-title-en">POLICY</p>
+            </div>
+
+            <div class="policy-grid">
+                <!-- 政策1 -->
+                <div class="policy-card">
+                    <div class="policy-visual">
+                        <span class="policy-num-large">01</span>
+                        <div class="policy-icon">
+                            <span class="policy-icon-inner">01</span>
+                        </div>
+                    </div>
+                    <div class="policy-content">
+                        <span class="policy-category">教育</span>
+                        <h3 class="policy-title">地域みんなが先生！<br>「学校と地域の壁」をなくす</h3>
+                        <p class="policy-description">教員経験と教育委員の視点を活かし、子どもたちが安心して学べる多様な居場所を作ります。</p>
+                        <ul class="policy-list">
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>不登校支援の拡充</strong>
+                                    <span>フリースクールとの連携や、学校以外の「学びの場」の整備</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>地域と共にある学校づくり</strong>
+                                    <span>地域住民が学校運営に関わり、大人の目と優しさが届く環境へ</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>現役世代の声を届ける</strong>
+                                    <span>子育て世代のリアルな悩みを行政に届けるパイプ役に</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 政策2 -->
+                <div class="policy-card">
+                    <div class="policy-visual">
+                        <span class="policy-num-large">02</span>
+                        <div class="policy-icon">
+                            <span class="policy-icon-inner">02</span>
+                        </div>
+                    </div>
+                    <div class="policy-content">
+                        <span class="policy-category">福祉・地域</span>
+                        <h3 class="policy-title">子ども×高齢者で<br>「孤独のない町」へ</h3>
+                        <p class="policy-description">核家族化と高齢化が進む中、世代を超えた交流で孤立を防ぎます。</p>
+                        <ul class="policy-list">
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>世代間交流の促進</strong>
+                                    <span>高齢者施設と学校・保育園の交流イベントや地域食堂の支援</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>見守りネットワークの強化</strong>
+                                    <span>地域全体で見守れる「お互い様」の仕組みづくり</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>空き家の活用</strong>
+                                    <span>空き家を地域の集まり場や子どもの遊び場として再生</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 政策3 -->
+                <div class="policy-card">
+                    <div class="policy-visual">
+                        <span class="policy-num-large">03</span>
+                        <div class="policy-icon">
+                            <span class="policy-icon-inner">03</span>
+                        </div>
+                    </div>
+                    <div class="policy-content">
+                        <span class="policy-category">活力</span>
+                        <h3 class="policy-title">「あるもの」を活かして<br>幸福度No.1へ</h3>
+                        <p class="policy-description">大規模な開発ではなく、城里町の自然や文化、人の温かさを最大の武器にします。</p>
+                        <ul class="policy-list">
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>文化・伝統の継承</strong>
+                                    <span>和太鼓やお祭りなど、地域の伝統行事を通じて住民の絆を深めます</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="policy-list-icon">✓</span>
+                                <div class="policy-list-text">
+                                    <strong>「心の豊かさ」重視の町政</strong>
+                                    <span>「この町に住んでよかった」と思える住民満足度の向上へ</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 町民の声セクション -->
+    <section class="voices">
+        <div class="voices-container">
+            <div class="section-header reveal">
+                <span class="section-num">04</span>
+                <h2 class="section-title">届いた声</h2>
+                <p class="section-title-en">VOICES</p>
+            </div>
+
+            <div class="voices-grid">
+                <div class="voice-card">
+                    <span class="voice-quote">"</span>
+                    <p class="voice-text">子どもが不登校になった時、優子さんに相談したら親身に話を聞いてくれました。「一人じゃないよ」という言葉に救われました。</p>
+                    <div class="voice-author">
+                        <div class="voice-avatar">👩</div>
+                        <div class="voice-info">
+                            <span class="voice-name">40代女性</span><br>
+                            小学生の母
+                        </div>
+                    </div>
+                </div>
+                <div class="voice-card">
+                    <span class="voice-quote">"</span>
+                    <p class="voice-text">PTA活動で一緒でしたが、いつも率先して動く姿に感心していました。こういう人に町政を任せたい。</p>
+                    <div class="voice-author">
+                        <div class="voice-avatar">👨</div>
+                        <div class="voice-info">
+                            <span class="voice-name">50代男性</span><br>
+                            元PTA役員
+                        </div>
+                    </div>
+                </div>
+                <div class="voice-card">
+                    <span class="voice-quote">"</span>
+                    <p class="voice-text">一人暮らしの私にも気さくに声をかけてくれる。こんな温かい人が議員になってくれたら心強いです。</p>
+                    <div class="voice-author">
+                        <div class="voice-avatar">👵</div>
+                        <div class="voice-info">
+                            <span class="voice-name">70代女性</span><br>
+                            一人暮らし
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- プロフィール -->
+    <section class="profile" id="profile">
+        <div class="profile-container">
+            <div class="section-header reveal">
+                <span class="section-num">05</span>
+                <h2 class="section-title">プロフィール</h2>
+                <p class="section-title-en">PROFILE</p>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-photo-area reveal-left">
+                    <div class="profile-photo">
+                        <div class="profile-photo-inner">写真準備中</div>
+                    </div>
+                    <p class="profile-tagline">走る！叩く！熱血おせっかい</p>
+                </div>
+
+                <div class="profile-info">
+                    <div class="profile-item">
+                        <span class="profile-label">経歴</span>
+                        <span class="profile-value">
+                            城里町教育委員会 教育委員<br>
+                            PTA本部役員 12年歴任（元PTA会長）
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">勤務歴</span>
+                        <span class="profile-value">
+                            高萩市立秋山小学校<br>
+                            高萩市立松岡小学校<br>
+                            友部市立大原小学校<br>
+                            常陸大宮市村田小学校<br>
+                            常陸大宮市大賀小学校<br>
+                            旧桂村立北方小学校<br>
+                            城里町立常北幼稚園<br>
+                            こばと東保育園<br>
+                            マッサージハウス水戸店
+                        </span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">地域活動</span>
+                        <span class="profile-value">和太鼓奏者、アロマセラピスト</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">家族</span>
+                        <span class="profile-value">母（介護中）、息子（高校生）</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">性格</span>
+                        <span class="profile-value">
+                            頼まれたら断れない性格<br>
+                            とにかく行動派（赤い服でマウンテンバイクに乗り、町中を駆け回っています！）
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 応援メッセージ -->
+    <section class="recommend" id="recommend">
+        <div class="recommend-container">
+            <div class="section-header reveal">
+                <span class="section-num">06</span>
+                <h2 class="section-title">応援メッセージ</h2>
+                <p class="section-title-en">RECOMMENDATION</p>
+            </div>
+
+            <div class="recommend-grid">
+                <div class="recommend-card reveal">
+                    <span class="recommend-quote-mark">"</span>
+                    <p class="recommend-text">
+                        ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。
+                    </p>
+                    <div class="recommend-author">
+                        <div class="recommend-author-photo">姓</div>
+                        <div>
+                            <p class="recommend-author-name">お名前が入ります</p>
+                            <p class="recommend-author-title">肩書きが入ります</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommend-card reveal">
+                    <span class="recommend-quote-mark">"</span>
+                    <p class="recommend-text">
+                        ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。
+                    </p>
+                    <div class="recommend-author">
+                        <div class="recommend-author-photo">姓</div>
+                        <div>
+                            <p class="recommend-author-name">お名前が入ります</p>
+                            <p class="recommend-author-title">肩書きが入ります</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommend-card reveal">
+                    <span class="recommend-quote-mark">"</span>
+                    <p class="recommend-text">
+                        ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。ここに応援メッセージのテキストが入ります。
+                    </p>
+                    <div class="recommend-author">
+                        <div class="recommend-author-photo">姓</div>
+                        <div>
+                            <p class="recommend-author-name">お名前が入ります</p>
+                            <p class="recommend-author-title">肩書きが入ります</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="share">
+        <div class="cta-container">
+            <p class="cta-lead reveal">あなたの「一声」が、大きな力になります</p>
+            <h2 class="cta-title reveal">
+                城里町の未来を、<br>一緒に変えませんか？
+            </h2>
+            <p class="cta-subtitle reveal">城里町にお住まいのご家族・ご友人に、この想いを届けてください</p>
+            <a href="#" class="cta-button reveal" onclick="shareLine(); return false;">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                </svg>
+                LINEで知り合いに教える
+            </a>
+            <p class="cta-note reveal">※ボタンを押すとLINEが開きます</p>
+        </div>
+    </section>
+
+    <!-- フローティングボタン -->
+    <div class="floating-cta">
+        <a href="#" onclick="shareLine(); return false;">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+            </svg>
+            LINEで紹介
+        </a>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p class="footer-name">田口優子</p>
+        <p class="footer-tagline">優しさの連鎖で、心響きあう城里町へ</p>
+        <p class="footer-copy">© 2025 田口優子後援会</p>
+    </footer>
+
+    <script>
+        // ローディング画面
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
+        });
+
+        // カスタムカーソル
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.12;
+            cursorY += (mouseY - cursorY) * 0.12;
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // カーソルホバーエフェクト
+        document.querySelectorAll('a, button, .policy-card, .voice-card, .number-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        // プログレスバー
+        const progressBar = document.querySelector('.progress-bar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            progressBar.style.transform = `scaleX(${scrollPercent})`;
+        });
+
+        // ナビゲーションのスクロール検知
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // スクロールアニメーション
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 全てのアニメーション要素を監視
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .policy-card, .number-card, .voice-card, .profile-item, .story-body p, .belief-text .line, .belief-signature').forEach(el => {
+            observer.observe(el);
+        });
+
+        // パララックス効果
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+
+                    // パララックス要素
+                    document.querySelectorAll('.parallax-element').forEach(el => {
+                        const speed = el.dataset.speed || 0.1;
+                        el.style.transform = `translate(-50%, calc(-50% + ${scrollY * speed}px))`;
+                    });
+
+                    // フローティングボタンの表示
+                    const floatingCta = document.querySelector('.floating-cta');
+                    if (scrollY > 800) {
+                        floatingCta.classList.add('visible');
+                    } else {
+                        floatingCta.classList.remove('visible');
+                    }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // LINE共有
+        function shareLine() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('【田口優子】城里町議会議員選挙に立候補します！「優しさの連鎖で、心響きあう城里町へ」ぜひサイトをご覧ください！');
+            window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank');
+        }
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // カウントアップアニメーション（数字セクション）
+        const numberCards = document.querySelectorAll('.number-value');
+        const numberObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const finalValue = parseInt(target.textContent);
+                    let currentValue = 0;
+                    const duration = 2000;
+                    const increment = finalValue / (duration / 16);
+
+                    const counter = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= finalValue) {
+                            currentValue = finalValue;
+                            clearInterval(counter);
+                        }
+                        const unit = target.querySelector('.number-unit');
+                        const unitText = unit ? unit.outerHTML : '';
+                        target.innerHTML = Math.floor(currentValue) + unitText;
+                    }, 16);
+
+                    numberObserver.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        numberCards.forEach(card => numberObserver.observe(card));
+    </script>
+</body>
+</html>
