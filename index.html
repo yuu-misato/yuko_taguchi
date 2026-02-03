@@ -425,17 +425,32 @@
 
         .hero-photo {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             aspect-ratio: 3/4;
-            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
-            border-radius: 0 80px 0 80px;
+            background: white;
+            border-radius: 0 100px 0 100px;
             margin-left: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            box-shadow:
+                0 50px 100px rgba(0,0,0,0.4),
+                0 0 0 8px rgba(255,255,255,0.1),
+                inset 0 0 60px rgba(255,255,255,0.1);
+        }
+
+        .hero-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(217, 55, 68, 0.1) 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hero-photo-placeholder {
@@ -446,25 +461,51 @@
             letter-spacing: 0.1em;
         }
 
+        .hero-photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-photo:hover .hero-photo-img {
+            transform: scale(1.05);
+        }
+
         .hero-photo-deco {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--gold);
             border-radius: 50%;
-            bottom: -30px;
-            left: -30px;
-            animation: rotate 20s linear infinite;
+            bottom: -40px;
+            left: -40px;
+            animation: rotate 25s linear infinite;
+            opacity: 0.6;
         }
 
         .hero-photo-deco::before {
             content: '';
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .hero-photo-deco::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
             border-radius: 50%;
         }
 
@@ -689,6 +730,13 @@
             color: rgba(255,255,255,0.5);
             font-family: 'Shippori Mincho', serif;
             letter-spacing: 0.1em;
+        }
+
+        .story-image-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
         }
 
         .story-deco {
@@ -1155,142 +1203,498 @@
             color: var(--text-dark);
         }
 
-        /* プロフィールセクション */
+        /* プロフィールセクション - フルリデザイン */
         .profile {
-            background: var(--text-dark);
-            color: white;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a0a 100%);
             position: relative;
             overflow: hidden;
         }
 
         .profile::before {
-            content: 'YUKO TAGUCHI';
-            font-family: 'Shippori Mincho', serif;
-            font-size: clamp(8rem, 20vw, 18rem);
-            font-weight: 800;
+            content: '';
             position: absolute;
-            bottom: -5%;
-            right: -5%;
-            color: rgba(255,255,255,0.02);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(217, 55, 68, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(197, 167, 103, 0.05) 0%, transparent 50%);
             pointer-events: none;
-            letter-spacing: -0.03em;
-            white-space: nowrap;
         }
 
-        .profile .section-num {
-            color: var(--gold);
-        }
-
-        .profile .section-title {
-            color: white;
-        }
-
-        .profile .section-title-en {
-            color: rgba(255,255,255,0.5);
-        }
-
-        .profile-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .profile-content {
+        .profile-hero {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: clamp(3rem, 8vw, 6rem);
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             align-items: center;
-        }
-
-        .profile-photo-area {
+            margin-bottom: 5rem;
             position: relative;
         }
 
-        .profile-photo {
+        .profile-hero-visual {
+            position: relative;
+        }
+
+        .profile-hero-photo {
+            position: relative;
             width: 100%;
-            max-width: 400px;
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            max-width: 450px;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: 0 100px 0 100px;
+            box-shadow:
+                0 50px 100px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        .profile-hero-photo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .profile-hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .profile-hero-photo:hover img {
+            transform: scale(1.05);
+        }
+
+        .profile-hero-frame {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            bottom: 40px;
+            left: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 0 100px 0 100px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .profile-hero-accent {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 120px;
+            height: 120px;
+            background: var(--red-primary);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            animation: morphProfile 10s ease-in-out infinite;
-            box-shadow: 0 30px 80px rgba(217, 55, 68, 0.3);
+            box-shadow: 0 20px 50px rgba(217, 55, 68, 0.4);
+            z-index: 2;
         }
 
-        @keyframes morphProfile {
-            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
-        }
-
-        .profile-photo-inner {
-            color: rgba(255,255,255,0.5);
+        .profile-hero-accent-text {
             font-family: 'Shippori Mincho', serif;
-            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            color: white;
             text-align: center;
-        }
-
-        .profile-tagline {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold);
-            color: var(--text-dark);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-family: 'Shippori Mincho', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            white-space: nowrap;
+            line-height: 1.5;
             letter-spacing: 0.1em;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .profile-info {
-            display: grid;
-            gap: 0;
+        .profile-hero-info {
+            position: relative;
         }
 
-        .profile-item {
-            padding: 2rem 0;
+        .profile-hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-hero-label::before {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .profile-hero-label span {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .profile-hero-name {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: white;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.15em;
+        }
+
+        .profile-hero-name-en {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .profile-hero-tagline {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .profile-hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px;
+        }
+
+        .profile-meta-icon {
+            font-size: 1.2rem;
+        }
+
+        .profile-meta-text {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* キャリアセクション - リデザイン */
+        .profile-career {
+            margin-top: 5rem;
+        }
+
+        .profile-career-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-career-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-career-title::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red-primary), var(--gold));
+        }
+
+        .profile-career-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.15em;
+        }
+
+        .career-grid {
             display: grid;
-            grid-template-columns: 130px 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            align-items: start;
+            margin-bottom: 4rem;
+        }
+
+        .career-category {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border-radius: 25px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
             opacity: 0;
-            transform: translateX(30px);
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .career-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red-primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .career-category:hover::before {
+            opacity: 1;
+        }
+
+        .career-category.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .career-category:nth-child(2) { transition-delay: 0.15s; }
+        .career-category:nth-child(3) { transition-delay: 0.3s; }
+
+        .career-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+            box-shadow: 0 15px 40px rgba(217, 55, 68, 0.3);
+        }
+
+        .career-category-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .career-count {
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-bottom: 1.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .career-list {
+            list-style: none;
+        }
+
+        .career-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            padding-bottom: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .career-list li:hover {
+            color: white;
+        }
+
+        .career-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 6px;
+            height: 6px;
+            background: var(--red-primary);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .career-list li:hover::before {
+            transform: scale(1.5);
+        }
+
+        /* スキルセクション - リデザイン */
+        .profile-skills {
+            margin-top: 4rem;
+        }
+
+        .skills-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .skills-header h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .skills-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(217, 55, 68, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .skill-card:nth-child(2) { transition-delay: 0.1s; }
+        .skill-card:nth-child(3) { transition-delay: 0.2s; }
+        .skill-card:nth-child(4) { transition-delay: 0.3s; }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .skill-name {
+            font-size: 0.95rem;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(217, 55, 68, 0.3);
+            box-shadow: 0 20px 50px rgba(217, 55, 68, 0.15);
+        }
+
+        /* 人柄セクション - リデザイン */
+        .profile-personality {
+            margin-top: 5rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .personality-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .personality-header h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .personality-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .personality-card {
+            background: linear-gradient(145deg, rgba(217, 55, 68, 0.08), rgba(217, 55, 68, 0.02));
+            border-radius: 25px;
+            padding: 3rem;
+            border: 1px solid rgba(217, 55, 68, 0.15);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .profile-item.visible {
+        .personality-card.visible {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
-        .profile-item:nth-child(2) { transition-delay: 0.1s; }
-        .profile-item:nth-child(3) { transition-delay: 0.2s; }
-        .profile-item:nth-child(4) { transition-delay: 0.3s; }
+        .personality-card:nth-child(2) { transition-delay: 0.15s; }
 
-        .profile-item:last-child {
-            border-bottom: none;
+        .personality-card::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--red-primary);
+            border-radius: 50%;
+            opacity: 0.1;
         }
 
-        .profile-label {
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            color: var(--gold);
-            font-weight: 500;
+        .personality-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
-        .profile-value {
-            font-size: 1.05rem;
+        .personality-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .personality-text {
+            color: rgba(255,255,255,0.75);
             line-height: 2;
-            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+        }
+
+        /* 非表示にする旧スタイル */
+        .profile-photo-area,
+        .profile-info,
+        .profile-item,
+        .profile-label,
+        .profile-value,
+        .profile-photo,
+        .profile-photo-inner,
+        .profile-photo-img,
+        .profile-tagline {
+            display: none;
         }
 
         /* 危機感セクション - 城里町の今 */
@@ -2484,9 +2888,7 @@
             <div class="hero-photo-wrapper">
                 <div class="hero-photo-frame">
                     <div class="hero-photo">
-                        <div class="hero-photo-placeholder">
-                            写真準備中
-                        </div>
+                        <img src="image/yuko_taguchi.jpg" alt="田口優子" class="hero-photo-img">
                     </div>
                     <div class="hero-photo-deco"></div>
                 </div>
@@ -2495,131 +2897,6 @@
         <div class="hero-scroll">
             <span class="hero-scroll-text">SCROLL</span>
             <span class="hero-scroll-line"></span>
-        </div>
-    </section>
-
-    <!-- 危機感セクション - 城里町の今 -->
-    <section class="crisis">
-        <div class="crisis-container">
-            <div class="crisis-header reveal">
-                <span class="crisis-label">今、知ってほしい</span>
-                <h2 class="crisis-title">城里町は、<span>静かに消えようとしています</span></h2>
-                <p class="crisis-subtitle">このままでは、私たちの町がなくなってしまう</p>
-            </div>
-
-            <!-- 危機の数字 -->
-            <div class="crisis-stats">
-                <div class="crisis-stat">
-                    <div class="crisis-stat-number">-5,000<span>人</span></div>
-                    <p class="crisis-stat-label">20年間で失われた人口</p>
-                    <p class="crisis-stat-desc">2000年：23,007人 → 2024年：17,967人<br>21年連続で人口が減り続けています</p>
-                </div>
-                <div class="crisis-stat">
-                    <div class="crisis-stat-number">37.5<span>%</span></div>
-                    <p class="crisis-stat-label">高齢化率</p>
-                    <p class="crisis-stat-desc">全国平均28.7%を大きく上回り<br>2.6人に1人が65歳以上です</p>
-                </div>
-                <div class="crisis-stat">
-                    <div class="crisis-stat-number">58.8<span>%</span></div>
-                    <p class="crisis-stat-label">2050年の高齢化率予測</p>
-                    <p class="crisis-stat-desc">このままでは約6割が高齢者に<br>誰が町を支えるのでしょうか</p>
-                </div>
-            </div>
-
-            <!-- 人口推移ビジュアル -->
-            <div class="crisis-timeline reveal">
-                <h3 class="crisis-timeline-title">城里町の人口推移</h3>
-                <div class="population-bars">
-                    <div class="population-bar">
-                        <div class="bar-wrapper" style="height: 180px;">
-                            <div class="bar-fill" data-height="100%"></div>
-                        </div>
-                        <span class="bar-value">23,007</span>
-                        <span class="bar-year">2000年</span>
-                    </div>
-                    <div class="population-bar">
-                        <div class="bar-wrapper" style="height: 180px;">
-                            <div class="bar-fill" data-height="79%"></div>
-                        </div>
-                        <span class="bar-value">18,097</span>
-                        <span class="bar-year">2020年</span>
-                        <span class="bar-change">▲21%</span>
-                    </div>
-                    <div class="population-bar">
-                        <div class="bar-wrapper" style="height: 180px;">
-                            <div class="bar-fill" data-height="78%"></div>
-                        </div>
-                        <span class="bar-value">17,967</span>
-                        <span class="bar-year">2024年</span>
-                        <span class="bar-change">21年連続減</span>
-                    </div>
-                    <div class="population-bar">
-                        <div class="bar-wrapper" style="height: 180px;">
-                            <div class="bar-fill future" data-height="60%"></div>
-                        </div>
-                        <span class="bar-value">13,856</span>
-                        <span class="bar-year">2040年予測</span>
-                        <span class="bar-change">さらに▲23%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 対比：現状 vs 未来 -->
-            <div class="crisis-comparison">
-                <div class="comparison-card dark">
-                    <span class="comparison-label">このままでは...</span>
-                    <h3 class="comparison-title">消えゆく城里町</h3>
-                    <ul class="comparison-list">
-                        <li><span class="comparison-icon">😔</span>若者が出ていき、戻ってこない</li>
-                        <li><span class="comparison-icon">🏥</span>病院が遠くて通えない</li>
-                        <li><span class="comparison-icon">🏫</span>学校がどんどん統廃合される</li>
-                        <li><span class="comparison-icon">🛒</span>買い物できる場所がなくなる</li>
-                        <li><span class="comparison-icon">👴</span>独居高齢者が孤立していく</li>
-                    </ul>
-                </div>
-
-                <div class="comparison-arrow">→</div>
-
-                <div class="comparison-card bright">
-                    <span class="comparison-label">田口優子と一緒に</span>
-                    <h3 class="comparison-title">つながりで守る城里町</h3>
-                    <ul class="comparison-list">
-                        <li><span class="comparison-icon">🌱</span>子どもが安心して育つ居場所</li>
-                        <li><span class="comparison-icon">🤝</span>世代を超えた支え合い</li>
-                        <li><span class="comparison-icon">🏠</span>空き家を地域の拠点に</li>
-                        <li><span class="comparison-icon">❤️</span>「おせっかい」が当たり前の文化</li>
-                        <li><span class="comparison-icon">✨</span>小さくても幸せな町へ</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 町民の声 -->
-            <div class="crisis-voices">
-                <h3 class="crisis-voices-title">こんな声が聞こえてきます</h3>
-                <div class="crisis-voices-grid">
-                    <div class="crisis-voice">
-                        <p class="crisis-voice-text">「子どもの友達が少なくて、遊び相手がいない。習い事も町外まで送り迎えが必要で大変...」</p>
-                        <span class="crisis-voice-author">— 30代 子育て中の母親</span>
-                    </div>
-                    <div class="crisis-voice">
-                        <p class="crisis-voice-text">「免許を返納したいけど、バスも少ないし、病院にどうやって通えばいいのか不安です」</p>
-                        <span class="crisis-voice-author">— 70代 一人暮らしの女性</span>
-                    </div>
-                    <div class="crisis-voice">
-                        <p class="crisis-voice-text">「実家に帰りたいけど、仕事がない。このままじゃ親の介護も難しい...」</p>
-                        <span class="crisis-voice-author">— 40代 都内在住の男性</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 行動を促すメッセージ -->
-            <div class="crisis-cta reveal">
-                <p class="crisis-cta-text">
-                    今、変わらなければ<br>
-                    <span>次はいつ変われるのでしょうか。</span>
-                </p>
-                <p class="crisis-cta-sub">一人ひとりの「おせっかい」が、城里町を救う力になります。</p>
-            </div>
         </div>
     </section>
 
@@ -2672,7 +2949,7 @@
             <div class="story-content">
                 <div class="story-visual reveal-left">
                     <div class="story-image">
-                        <div class="story-image-inner">写真準備中</div>
+                        <img src="image/yuko_taguchi.jpg" alt="田口優子" class="story-image-img">
                     </div>
                     <div class="story-deco"></div>
                     <div class="story-deco-2"></div>
@@ -2910,39 +3187,58 @@
                 <p class="section-title-en">PROFILE</p>
             </div>
 
-            <div class="profile-content">
-                <div class="profile-photo-area reveal-left">
-                    <div class="profile-photo">
-                        <div class="profile-photo-inner">写真準備中</div>
+            <!-- ヒーロープロフィール -->
+            <div class="profile-hero">
+                <div class="profile-hero-visual reveal-left">
+                    <div class="profile-hero-photo">
+                        <img src="image/yuko_taguchi.jpg" alt="田口優子">
                     </div>
-                    <p class="profile-tagline">走る！叩く！熱血おせっかい</p>
+                    <div class="profile-hero-frame"></div>
+                    <div class="profile-hero-accent">
+                        <span class="profile-hero-accent-text">走る！<br>叩く！<br>熱血<br>おせっかい</span>
+                    </div>
                 </div>
 
-                <div class="profile-info">
-                    <div class="profile-item">
-                        <span class="profile-label">氏名</span>
-                        <span class="profile-value">田口 優子（たぐち ゆうこ）</span>
+                <div class="profile-hero-info reveal-right">
+                    <div class="profile-hero-label">
+                        <span>Profile</span>
                     </div>
-                    <div class="profile-item">
-                        <span class="profile-label">現職</span>
-                        <span class="profile-value">城里町教育委員会 教育委員</span>
-                    </div>
-                    <div class="profile-item">
-                        <span class="profile-label">家族</span>
-                        <span class="profile-value">母（介護中）、息子（高校生）</span>
+                    <h3 class="profile-hero-name">田口 優子</h3>
+                    <p class="profile-hero-name-en">Taguchi Yuko</p>
+                    <p class="profile-hero-tagline">「優しさの連鎖」で、<br>城里町に笑顔を増やしたい。</p>
+
+                    <div class="profile-hero-meta">
+                        <div class="profile-meta-item">
+                            <span class="profile-meta-icon">🎓</span>
+                            <span class="profile-meta-text">城里町教育委員会 教育委員</span>
+                        </div>
+                        <div class="profile-meta-item">
+                            <span class="profile-meta-icon">👨‍👩‍👦</span>
+                            <span class="profile-meta-text">母（介護中）・息子（高校生）</span>
+                        </div>
+                        <div class="profile-meta-item">
+                            <span class="profile-meta-icon">🚒</span>
+                            <span class="profile-meta-text">消防団員 11年</span>
+                        </div>
+                        <div class="profile-meta-item">
+                            <span class="profile-meta-icon">📚</span>
+                            <span class="profile-meta-text">PTA会長 6年</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- キャリア詳細 -->
-            <div class="profile-extended">
-                <h3 class="profile-section-title">これまでのあゆみ</h3>
+            <!-- キャリアセクション -->
+            <div class="profile-career">
+                <div class="profile-career-header">
+                    <h3 class="profile-career-title">これまでのあゆみ</h3>
+                    <span class="profile-career-subtitle">CAREER & EXPERIENCE</span>
+                </div>
 
                 <div class="career-grid">
-                    <!-- 教育機関（小学校） -->
                     <div class="career-category">
                         <div class="career-icon">🏫</div>
-                        <h4 class="career-category-title">小学校勤務</h4>
+                        <h4 class="career-category-title">小学校教員</h4>
                         <p class="career-count">6校で教壇に立つ</p>
                         <ul class="career-list">
                             <li>高萩市立秋山小学校</li>
@@ -2954,10 +3250,9 @@
                         </ul>
                     </div>
 
-                    <!-- 幼稚園・保育園 -->
                     <div class="career-category">
                         <div class="career-icon">👶</div>
-                        <h4 class="career-category-title">幼稚園・保育園</h4>
+                        <h4 class="career-category-title">幼児教育</h4>
                         <p class="career-count">乳幼児教育にも従事</p>
                         <ul class="career-list">
                             <li>城里町立常北幼稚園</li>
@@ -2965,10 +3260,9 @@
                         </ul>
                     </div>
 
-                    <!-- その他の経験 -->
                     <div class="career-category">
                         <div class="career-icon">💼</div>
-                        <h4 class="career-category-title">地域貢献活動</h4>
+                        <h4 class="career-category-title">地域貢献</h4>
                         <p class="career-count">地域の最前線で活動</p>
                         <ul class="career-list">
                             <li>城里町教育委員会 教育委員</li>
@@ -2976,13 +3270,16 @@
                             <li>幼小中PTA本部役員 12年</li>
                             <li>PTA会長 6年</li>
                             <li>城里町消防団 11年</li>
-                            <li>マッサージハウス水戸店</li>
                         </ul>
                     </div>
                 </div>
+            </div>
 
-                <!-- 特技・資格 -->
-                <h3 class="profile-section-title">得意なこと</h3>
+            <!-- スキルセクション -->
+            <div class="profile-skills">
+                <div class="skills-header">
+                    <h3>得意なこと</h3>
+                </div>
                 <div class="skills-grid">
                     <div class="skill-card">
                         <span class="skill-icon">🥁</span>
@@ -3001,17 +3298,25 @@
                         <span class="skill-name">介護経験</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- 人柄 -->
-                <div class="personality-section">
+            <!-- 人柄セクション -->
+            <div class="profile-personality">
+                <div class="personality-header">
+                    <h3>人となり</h3>
+                    <p>PERSONALITY</p>
+                </div>
+                <div class="personality-grid">
                     <div class="personality-card">
-                        <h4 class="personality-title">🤝 頼まれたら断れない性格</h4>
+                        <span class="personality-emoji">🤝</span>
+                        <h4 class="personality-title">頼まれたら断れない性格</h4>
                         <p class="personality-text">
                             困っている人を見ると放っておけない。「おせっかい」と言われても、誰かの役に立ちたい。それが私のモットーです。
                         </p>
                     </div>
                     <div class="personality-card">
-                        <h4 class="personality-title">🏃 とにかく行動派</h4>
+                        <span class="personality-emoji">🏃</span>
+                        <h4 class="personality-title">とにかく行動派</h4>
                         <p class="personality-text">
                             赤い服でマウンテンバイクに乗り、町中を駆け回っています。じっとしていられない性格で、現場第一主義を貫きます。
                         </p>
